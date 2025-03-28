@@ -171,6 +171,7 @@ async def main():
                 },
             )
         await timer.wait_for_end()
+    await client.stop()
 
 
 if __name__ == "__main__":
