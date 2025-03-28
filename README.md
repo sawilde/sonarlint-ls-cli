@@ -22,4 +22,4 @@ You can have more information [here](https://sonarsource.github.io/rspec/)
 
 ### Run the scan wihtout any dependencies (autodownload)
 
-`./scan.sh analyze --files *.py`
+`curl -s https://raw.githubusercontent.com/vincentfenet/sonarlint-ls-cli/refs/heads/master/scan.sh | bash -s -- analyze --files *.py`
