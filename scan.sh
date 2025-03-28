@@ -1,3 +1,5 @@
+#!/bin/bash
+set -e
 if [ ! -e ~/.sonarlint-ls ]; then
     mkdir -p ~/.sonarlint-ls
     pushd ~/.sonarlint-ls > /dev/null

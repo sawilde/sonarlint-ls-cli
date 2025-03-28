@@ -84,7 +84,7 @@ async def main():
         else:
             for rule in allrules:
                 rules[f"{rule}"] = {"level": "on"}
-        if ARGS.disable_rules:
+        if ARGS.command == "analyze" and ARGS.disable_rules:
             for rule in ARGS.disable_rules.split(","):
                 rules[f"{rule}"] = {"level": "off"}
         return [{"rules": rules}]
