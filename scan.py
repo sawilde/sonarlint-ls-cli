@@ -187,6 +187,7 @@ if __name__ == "__main__":
         nargs="+",
         help="Specify one or more Sonar analyzer jar binaries",
     )
+    parser.add_argument("--nop", help="Do nothing", action="store_true")
     subparsers = parser.add_subparsers(
         title="commands", description="Available commands", dest="command"
     )

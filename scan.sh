@@ -25,5 +25,4 @@ if [ ! -e ~/.sonarlint-ls/venv ]; then
     python3 -m venv ~/.sonarlint-ls/venv
     ~/.sonarlint-ls/venv/bin/pip install -r $PREFIX/requirements.txt
 fi
-
-~/.sonarlint-ls/venv/bin/python $PREFIX/scan.py --sonarlint-ls ~/.sonarlint-ls/server/*.jar --analyzers ~/.sonarlint-ls/analyzers/*.jar $*
+~/.sonarlint-ls/venv/bin/python $PREFIX/scan.py --sonarlint-ls ~/.sonarlint-ls/server/*.jar --analyzers ~/.sonarlint-ls/analyzers/*.jar --nop $*
