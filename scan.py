@@ -2,6 +2,7 @@
 
 import argparse
 import asyncio
+import pathlib
 import sys
 
 import attrs
@@ -110,7 +111,13 @@ async def main():
             ERRORS = True
         timer.reset(2)
 
+    if ARGS.debug:
+        script_dir = pathlib.Path(__file__).parent.resolve()
+        debug_args = [f"{script_dir}/proxy.js"]
+    else:
+        debug_args = []
     await client.start_io(
+        *debug_args,
         ARGS.java,
         "-jar",
         ARGS.sonarlint_ls,
@@ -168,6 +175,7 @@ async def main():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run a SonarQube scan.")
+    parser.add_argument("--debug", action="store_true", help="Debug lsp in a log file")
     parser.add_argument("--java", help="Specify the Java binary", default="java")
     parser.add_argument(
         "--sonarlint-ls", required=True, help="Specify the sonarlint-ls jar binary"

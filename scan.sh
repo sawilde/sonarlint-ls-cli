@@ -24,4 +24,4 @@ else
     fi
     SCAN=~/.sonarlint-ls/sonarlint-ls-cli/scan.py
 fi
-~/.sonarlint-ls/venv/bin/python $SCAN --sonarlint-ls ~/.sonarlint-ls/server/*.jar --analyzers ~/.sonarlint-ls/analyzers/*.jar -- $*
+~/.sonarlint-ls/venv/bin/python $SCAN --sonarlint-ls ~/.sonarlint-ls/server/*.jar --analyzers ~/.sonarlint-ls/analyzers/*.jar $*

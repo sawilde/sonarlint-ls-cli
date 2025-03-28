@@ -1,4 +1,3 @@
 old/
-proxy.js
-proxy.log
+*.log
 run.sh
