@@ -3,6 +3,7 @@
 import argparse
 import asyncio
 import pathlib
+import re
 import sys
 
 import attrs
@@ -69,6 +70,7 @@ async def main():
     """Main function."""
     timer = ResettableTimer(60)
     orig_files = {}
+    orig_files_content = {}
     allrules = []
     rules = {}
     diagnostics = []
@@ -103,6 +105,11 @@ async def main():
         global ERRORS  # pylint: disable=global-statement
         for diag in params.diagnostics:
             file = orig_files[params.uri.replace("file://", "")]
+            line = orig_files_content[file][diag.range.start.line]
+            if diag.code == 'python:S139' and '# pylint' in line:
+                continue
+            if re.search(r"# sonar:\s*disable=.*" + diag.code.split(":")[1], line):
+                continue
             position = f"{diag.range.start.line+1}:{diag.range.start.character+1}"
             diagnostic = f"{file}:{position} - {diag.message} ({diag.code})"
             if diagnostic not in diagnostics:
@@ -159,6 +166,7 @@ async def main():
         for file in ARGS.files:
             tmpfile = f"/tmp/{file.replace('/', '_')}"
             orig_files[tmpfile] = file
+            orig_files_content[file] = open(file, "r", encoding="utf-8").read().splitlines()
             send_anonymous_message(
                 "textDocument/didOpen",
                 {
