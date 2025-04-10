@@ -108,7 +108,7 @@ async def main():
             line = orig_files_content[file][diag.range.start.line]
             if diag.code == 'python:S139' and '# pylint' in line:
                 continue
-            if re.search(r"# sonar:\s*disable=.*" + diag.code.split(":")[1], line):
+            if re.search(r"# .*sonar:\s*disable=.*" + diag.code.split(":")[1], line):
                 continue
             position = f"{diag.range.start.line+1}:{diag.range.start.character+1}"
             diagnostic = f"{file}:{position} - {diag.message} ({diag.code})"
