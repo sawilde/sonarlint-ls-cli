@@ -164,16 +164,17 @@ async def main():
         print(",".join(allrules))
     if ARGS.command == "analyze":
         for file in ARGS.files:
+            base_folder = ARGS.base_folder
             tmpfile = f"/tmp/{file.replace('/', '_')}"
             orig_files[tmpfile] = file
-            orig_files_content[file] = open(file, "r", encoding="utf-8").read().splitlines()
+            orig_files_content[file] = open(f"{base_folder}/{file}", "r", encoding="utf-8").read().splitlines()
             send_anonymous_message(
                 "textDocument/didOpen",
                 {
                     "textDocument": {
                         "uri": f"file://{tmpfile}",
-                        "text": open(file, "r", encoding="utf-8").read(),
-                        "languageId": "python",
+                        "text": open(f"{base_folder}/{file}", "r", encoding="utf-8").read(),
+                        "languageId": ARGS.ext,
                         "version": 1,
                     }
                 },
@@ -208,6 +209,8 @@ if __name__ == "__main__":
     analyze_parser.add_argument("--rules", help="Specify the rules to apply")
     analyze_parser.add_argument("--disable-rules", help="Specify the rules to disable")
     analyze_parser.add_argument("--files", nargs="+", help="List of files to process")
+    analyze_parser.add_argument("--ext", help="Language Id", default="python")
+    analyze_parser.add_argument("--base-folder", help="The base folder", default=".")
     ARGS = parser.parse_args()
     asyncio.run(main())
     if ERRORS:
